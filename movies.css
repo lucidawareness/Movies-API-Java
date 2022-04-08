@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
+
+body {
+    background-color: #403a35 !important;
+    font-family: 'Pathway Gothic One', sans-serif !important;
+    font-size: x-large !important;
+}
+
+.gif {
+    display: flex;
+    justify-content: center;
+}
+
+#page-title {
+    font-family: 'Limelight', cursive;
+    color: yellow !important;
+    font-size: 5rem;
+    text-shadow: 3px 2px black;
+}
+
+.edit-button, .delete-button {
+    background-color: black;
+    color: white;
+    height: 3rem;
+}
+#nav {
+    position: relative;
+
+}
+#search-bar {
+    padding-bottom: 1em;
+}
+
+#search-input {
+    width: 15em;
+}
+
+#movie-form {
+    margin: 0 auto;
+    width: 50%;
+}
+
+#newDescription {
+    height: 85px;
+}
+
+.form-control {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#new-movie-submit {
+    margin-bottom: 10em;
+}
+
+.ratingStar {
+    color: #dabd18b2;
+}
+
+li {
+    list-style: none;
+}
+
+.card-info {
+    background-color: lightgray;
+}
+
+.card-title {
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+.text {
+    color: yellow;
+}
+
+.edit-button, .delete-button {
+    color: yellow;
+}
+
+#new-movie-submit {
+    background-color: black;
+    color: yellow;
+    width: 100%;
+}
+.card-deck {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.bottom-form{
+    position: relative;
+}
+.popcorn-image {
+    position: absolute;
+    top: 300px;
+    left: 20%;
+    z-index: -1000;
+}
+.hide {
+    display: none !important;
+}
