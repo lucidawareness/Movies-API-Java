@@ -1,4 +1,4 @@
-const url = "https://cute-savory-grandparent.glitch.me/movies"
+const url = "http://localhost:8080/movies/"
 
 function getAllMovies() {
 	fetch(url).then(response =>
@@ -40,14 +40,14 @@ function getAllMovies() {
                                             contenteditable="true">${data[i].rating}</span></li>
                                     <li>
                                         <div class="rating">`;
-                    for (let j = 1; j <= 5; j++) {
-                        if (j <= data[i].rating ){
-                            html += `<i value="${j}" id="star-${j}" data-id="${data[i].id}" class="fa fa-star ratingStar"></i>`
-                        } else {
-                            html += `<i value="${j}" id="star-${j}" data-id="${data[i].id}" class="fa fa-star"></i>`
-                        }
-                    }
-                                       html += `
+					for (let j = 1; j <= 5; j++) {
+						if (j <= data[i].rating ){
+							html += `<i value="${j}" id="star-${j}" data-id="${data[i].id}" class="fa fa-star ratingStar"></i>`
+						} else {
+							html += `<i value="${j}" id="star-${j}" data-id="${data[i].id}" class="fa fa-star"></i>`
+						}
+					}
+					html += `
                                         </div>
                                     </li>
                                 </ul>
@@ -74,12 +74,12 @@ function getAllMovies() {
 
 				// console.log(event.target)
 				let recordId = $(event.target).data("id")
-				console.log($(event.target))
 				//data record for the id
 				$(`#rating-${recordId}`).text(rating)
 				updateRating(rating, event.target);
 			})
-			search (data);
+			search(data);
+			postNewMovie();
 		})
 	);
 }
@@ -90,9 +90,9 @@ function search(data){
 			if (data[i].title === undefined){
 				continue
 			}
-			if (data[i].title.includes(value.toLowerCase()) === false){
+			if (data[i].title.toLowerCase().includes(value.toLowerCase()) === false){
 				document.querySelector(`#movie0-${data[i].id}`).classList.add("hide");
-			} 			if (data[i].title.includes(value.toLowerCase()) === true) {
+			} 			if (data[i].title.toLowerCase().includes(value.toLowerCase()) === true) {
 				document.querySelector(`#movie0-${data[i].id}`).classList.remove("hide");
 			}
 		}
@@ -101,17 +101,18 @@ function search(data){
 
 
 
-function newMovies(newPoster, newTitle, newCast, newDirector, newGenre, newDescription, newRating) {
+function newMovies(newPoster, newTitle, newCast, newDirector, newYear, newGenre, newDescription, newRating) {
 
 	$('#new-movie-submit').attr('disabled', true);
 	const userInput = {
 		title: newTitle,
+		rating: newRating,
 		poster: newPoster,
-		director: newDirector,
-		actors: newCast,
+		year: newYear,
 		genre: newGenre,
+		director: newDirector,
 		plot: newDescription,
-		rating: newRating
+		actors: newCast
 	};
 	const options = {
 		method: 'POST',
@@ -123,13 +124,12 @@ function newMovies(newPoster, newTitle, newCast, newDirector, newGenre, newDescr
 
 	fetch(url, options)
 		.then(response => {
-			console.log(response)
 			$('#new-movie-submit').attr('disabled', false);
 			getAllMovies()
 		})
 }
 
-function onLoad() {
+function postNewMovie() {
 
 	$("#movie-form").on("submit", (e) => {
 		e.preventDefault()
@@ -137,6 +137,7 @@ function onLoad() {
 		let newTitle = $('#newTitle').val();
 		let newCast = $('#newCast').val();
 		let newDirector = $('#newDirector').val();
+		let newYear = $('#newYear').val();
 		let newGenre = $('#newGenre').val();
 		let newDescription = $('#newDescription').val();
 		let newRating = $('#newRating').val();
@@ -144,10 +145,12 @@ function onLoad() {
 		$('#newTitle').val("");
 		$('#newCast').val("");
 		$('#newDirector').val("");
+		$('#newYear').val("");
 		$('#newGenre').val("");
 		$('#newDescription').val("");
 		$('#newRating').val("");
-		newMovies(newPoster ,newTitle, newCast, newDirector, newGenre, newDescription, newRating);
+		newMovies(newPoster ,newTitle, newCast, newDirector, newYear, newGenre, newDescription, newRating);
+		getAllMovies();
 	});
 }
 // const star = parseInt(element.id.split("-")[1]);
@@ -189,10 +192,8 @@ function deleteCard(id) {
 	fetch(url + "/" + id1, {
 		method: 'DELETE'
 	}).then(response => {
-		console.log(response)
 		getAllMovies()
 	});
-	console.log(id1)
 }
 
 
@@ -216,4 +217,3 @@ function updateRating(userRating, targetElement) {
 
 
 setTimeout(getAllMovies, 2000);
-
