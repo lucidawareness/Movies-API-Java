@@ -7,64 +7,54 @@ function getAllMovies() {
 			for (let i = 0; i < data.length; i++) {
 				if (data[i].title === undefined) {
 				} else {
-					let title = data[i].title.toUpperCase();
 					let imgTag = (data[i].poster) ? `<img class="card-img-top" style="height: 429px" src="${data[i].poster}" id = "posterImage-${data[i].id}" alt="Card image cap">` : "";
 					//language=HTML
 					let html = `
-                        <div class="card-deck">
-                            <div class="card m-4" id="movie0-${data[i].id}" style="width: 18rem;">
-                                ${imgTag}
-                                <li class="card-info"> TITLE</li>
-                                <div class="card-body">
-                                    <p id="card-title-${data[i].id}" class="card-title"><span
-                                            contenteditable="true">${title}</span></p>
+                        <div class="card m-2" id="movie0-${data[i].id}">
+                            ${imgTag}
+                            <div class="descriptions">
+                                <h1 id="card-title-${data[i].id}"><span contenteditable="true">${data[i].title}</span>
+                                </h1>
+
+                                <p id="actors-${data[i].id}"><span contenteditable="true">${data[i].actors}</span></p>
+
+                                <p id="director-${data[i].id}"><span contenteditable="true">${data[i].director}</span>
+                                </p>
+
+                                <p id="genre-${data[i].id}"><span contenteditable="true">${data[i].genre}</span></p>
+
+                                <p id="plot-${data[i].id}"><span contenteditable="true">${data[i].plot}</span></p>
+
+                                <p id="rating-${data[i].id}" class="list-group-item d-none"><span
+                                        contenteditable="true">${data[i].rating}</span></p>
+                                <p>
+                                <div class="rating">`;
+                                    for (let j = 1; j <= 5; j++) {
+                                    if (j <= data[i].rating) {
+                                    html += `<i value="${j}" id="star-${j}" data-id="${data[i].id}"
+                                                 class="fa fa-star ratingStar"></i>`
+                                    } else {
+                                    html += `<i value="${j}" id="star-${j}" data-id="${data[i].id}"
+                                                 class="fa fa-star"></i>`
+                                    }
+                                    }
+                                    html += `
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    <li id="id" style="display:none">${data[i].id}</li>
-                                    <li class="card-info"> ACTORS</li>
-                                    <li id="actors-${data[i].id}" class="list-group-item"
-                                        style="height: 150px"><span contenteditable="true">${data[i].actors}</span>
-                                    </li>
-                                    <li class="card-info"> DIRECTOR</li>
-                                    <li id="director-${data[i].id}" class="list-group-item">
-                                        <span contenteditable="true">${data[i].director}</span>
-                                    </li>
-                                    <li class="card-info"> GENRE</li>
-                                    <li id="genre-${data[i].id}" class="list-group-item"><span
-                                            contenteditable="true">${data[i].genre}</span></li>
-                                    <li class="card-info"> PLOT</li>
-                                    <li id="plot-${data[i].id}" class="list-group-item"><span
-                                            contenteditable="true">${data[i].plot}</span></li>
-                                    <li class="card-info"> RATING</li>
-                                    <li  id="rating-${data[i].id}" class="list-group-item d-none"><span
-                                            contenteditable="true">${data[i].rating}</span></li>
-                                    <li>
-                                        <div class="rating">`;
-					for (let j = 1; j <= 5; j++) {
-						if (j <= data[i].rating ){
-							html += `<i value="${j}" id="star-${j}" data-id="${data[i].id}" class="fa fa-star ratingStar"></i>`
-						} else {
-							html += `<i value="${j}" id="star-${j}" data-id="${data[i].id}" class="fa fa-star"></i>`
-						}
-					}
-					html += `
-                                        </div>
-                                    </li>
-                                </ul>
+                                </p>
                                 <input type="button" value="Save My Edits" class="edit-button"
                                        onclick="saveEdits(${data[i].id})"/>
                                 <input type="button" value="Delete" class="delete-button"
                                        onclick="deleteCard(${data[i].id})"/>
                             </div>
-                        </div>
-					`;
+                        </div>`;
 					$('#card-div').append(html);
 				}
 			}
 			$('.gif').css("display", "none");
 			$('#movies-header').css("display", "block");
 			$('#movie-form').css("display", "block");
-			$('#search-bar').css('display', 'block')
+			$('#search-bar').css('display', 'block');
+			$('#modal-btn').css('display', 'block');
 
 			// Setup rating listeners after data is loaded.
 			// there were no movie elements to add the star icons for
@@ -83,22 +73,22 @@ function getAllMovies() {
 		})
 	);
 }
-function search(data){
-	$('#search-bar').on('input', (e)=>{
+function search(data) {
+	$('#search-bar').on('input', (e) => {
 		let value = e.target.value
 		for (let i = 0; i < data.length; i++) {
-			if (data[i].title === undefined){
+			if (data[i].title === undefined) {
 				continue
 			}
-			if (data[i].title.toLowerCase().includes(value.toLowerCase()) === false){
+			if (data[i].title.toLowerCase().includes(value.toLowerCase()) === false) {
 				document.querySelector(`#movie0-${data[i].id}`).classList.add("hide");
-			} 			if (data[i].title.toLowerCase().includes(value.toLowerCase()) === true) {
+			}
+			if (data[i].title.toLowerCase().includes(value.toLowerCase()) === true) {
 				document.querySelector(`#movie0-${data[i].id}`).classList.remove("hide");
 			}
 		}
 	})
 }
-
 
 
 function newMovies(newPoster, newTitle, newCast, newDirector, newYear, newGenre, newDescription, newRating) {
@@ -131,8 +121,7 @@ function newMovies(newPoster, newTitle, newCast, newDirector, newYear, newGenre,
 
 function postNewMovie() {
 
-	$("#movie-form").on("submit", (e) => {
-		e.preventDefault()
+	$("#new-movie-submit").click((e) => {
 		let newPoster = $('#newPoster').val();
 		let newTitle = $('#newTitle').val();
 		let newCast = $('#newCast').val();
@@ -149,16 +138,17 @@ function postNewMovie() {
 		$('#newGenre').val("");
 		$('#newDescription').val("");
 		$('#newRating').val("");
-		newMovies(newPoster ,newTitle, newCast, newDirector, newYear, newGenre, newDescription, newRating);
+		newMovies(newPoster, newTitle, newCast, newDirector, newYear, newGenre, newDescription, newRating);
 		getAllMovies();
 	});
 }
+
 // const star = parseInt(element.id.split("-")[1]);
 
 function saveEdits(id) {
 	let id1 = id;
 	let poster1 = $("#posterImage-" + id).attr("src");
-	let editedTitle = $('#card-title-' + id).text().toLowerCase();
+	let editedTitle = $('#card-title-' + id).text();
 	let editedCast = $('#actors-' + id).text();
 	let editedDirector = $('#director-' + id).text();
 	let editedGenre = $('#genre-' + id).text();
