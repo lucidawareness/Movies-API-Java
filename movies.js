@@ -10,7 +10,7 @@ function getAllMovies() {
 					let imgTag = (data[i].poster) ? `<img class="card-img-top" style="height: 429px" src="${data[i].poster}" id = "posterImage-${data[i].id}" alt="Card image cap">` : "";
 					//language=HTML
 					let html = `
-                        <div class="card m-2" id="movie0-${data[i].id}">
+                        <div class="card m-3" id="movie0-${data[i].id}">
                             ${imgTag}
                             <div class="descriptions">
                                 <h1 id="card-title-${data[i].id}"><span contenteditable="true">${data[i].title}</span>
@@ -154,16 +154,14 @@ function saveEdits(id) {
 	let editedGenre = $('#genre-' + id).text();
 	let editedDescription = $('#plot-' + id).text();
 	let editedRating = $('#rating-' + id).text();
-	// let editedRating = ($("#star-").attr("value"));
-	// console.log(editedRating)
 
 	const userInput = {
-		poster: poster1,
-		title: editedTitle,
-		actors: editedCast,
-		director: editedDirector,
-		genre: editedGenre,
-		plot: editedDescription,
+		poster: poster1.trim(),
+		title: editedTitle.trim(),
+		actors: editedCast.trim(),
+		director: editedDirector.trim(),
+		genre: editedGenre.trim(),
+		plot: editedDescription.trim(),
 		rating: editedRating
 	}
 	fetch(url + "/" + id1, {

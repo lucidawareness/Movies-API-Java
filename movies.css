@@ -5,13 +5,14 @@ body {
     background-color: #c32A2A !important;
     padding: 0;
     margin:0;
-    width:100vw;
+    width:97vw;
     font-family: 'Pathway Gothic One', sans-serif !important;
     font-size: x-large !important;
 }
 
 .center {
     height: 100vh;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,6 +85,7 @@ body {
 }
 #nav {
     /*position: relative;*/
+    width: 103%;
 
 }
 
@@ -199,7 +201,7 @@ li {
     flex: 1;
     flex-basis: 300px;
     flex-grow: 0;
-    height: 440px;
+    height: 429px;
     background: #fff;
     border: 2px solid #fff;
     box-shadow: 0px 4px 7px rgba(0,0,0,.5);
@@ -224,6 +226,7 @@ li {
     padding: 20px;
     box-sizing: border-box;
     clip-path: circle(0% at 100% 100%);
+    overflow: auto;
 }
 .card:hover .descriptions{
     left:0px;
